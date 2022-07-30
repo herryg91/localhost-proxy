@@ -1,0 +1,9 @@
+{
+    "port": 7000,
+    "editor": "nano",
+    "routes": {
+        "/product": "localhost:18081",
+        "/superadmin": "localhost:28001",
+        "/user": "localhost:18080"
+    }
+}
