@@ -10,19 +10,32 @@ import (
 )
 
 type Config struct {
-	Port   int               `json:"port"`   // 7000
-	Editor string            `json:"editor"` // vi | nano
-	Routes map[string]string `json:"routes"`
+	Port   int              `json:"port"`   // 7000
+	Editor string           `json:"editor"` // vi | nano
+	Routes []LocalhostRoute `json:"routes"`
+}
+
+type LocalhostRoute struct {
+	Name        string `json:"name"`
+	Pathname    string `json:"path"`
+	Destination string `json:"dest"`
 }
 
 func (Config) FromDefaultConfig() *Config {
-
 	return &Config{
 		Port:   7000,
 		Editor: "vi",
-		Routes: map[string]string{
-			"/user":    "localhost:18080",
-			"/product": "localhost:18081",
+		Routes: []LocalhostRoute{
+			{
+				Name:        "user-api",
+				Pathname:    "/user",
+				Destination: "localhost:18080",
+			},
+			{
+				Name:        "product-api",
+				Pathname:    "/product",
+				Destination: "localhost:18081",
+			},
 		},
 	}
 }

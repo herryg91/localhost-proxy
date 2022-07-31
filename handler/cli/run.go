@@ -36,20 +36,20 @@ func (c *CmdRun) runCommand(cmd *cobra.Command, args []string) error {
 	if len(cfg.Routes) == 0 {
 		log.Println("    No routes")
 	}
-	for k, v := range cfg.Routes {
-		log.Println(fmt.Sprintf("    %s => %s", k, v))
+	for _, route_cfg := range cfg.Routes {
+		log.Println(fmt.Sprintf("  %s: %s => %s", route_cfg.Name, route_cfg.Pathname, route_cfg.Destination))
 	}
 	log.Println("===================================")
 
 	director := func(req *http.Request) {
-		for prefix, remote_host := range cfg.Routes {
-			if strings.HasPrefix(req.URL.Path, prefix) && strings.HasSuffix(req.URL.Path, prefix) {
+		for _, route_cfg := range cfg.Routes {
+			if strings.HasPrefix(req.URL.Path, route_cfg.Pathname) && strings.HasSuffix(req.URL.Path, route_cfg.Pathname) {
 				req.URL.Path = "/"
-				req.URL.Host = remote_host
+				req.URL.Host = route_cfg.Destination
 				break
-			} else if strings.HasPrefix(req.URL.Path, prefix+"/") {
-				req.URL.Path = "/" + helpers.StripUrlPrefix(req.URL.Path, prefix+"/")
-				req.URL.Host = remote_host
+			} else if strings.HasPrefix(req.URL.Path, route_cfg.Pathname+"/") {
+				req.URL.Path = "/" + helpers.StripUrlPrefix(req.URL.Path, route_cfg.Pathname+"/")
+				req.URL.Host = route_cfg.Destination
 				break
 			}
 		}
