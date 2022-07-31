@@ -98,11 +98,13 @@ func (s *Config) UpdateByEditor() error {
 		return ErrConfigNothingChange
 	}
 
-	err = json.Unmarshal(updated_data, &s)
+	newConfig := &Config{}
+	err = json.Unmarshal(updated_data, &newConfig)
 	if err != nil {
 		return fmt.Errorf("Error unmarshal: " + string(updated_data))
 	}
 
+	s = newConfig
 	err = s.SaveConfig()
 	if err != nil {
 		return fmt.Errorf("Failed to save config: " + err.Error())
