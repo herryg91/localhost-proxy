@@ -16,6 +16,7 @@ type Config struct {
 }
 
 func (Config) FromDefaultConfig() *Config {
+
 	return &Config{
 		Port:   7000,
 		Editor: "vi",
@@ -28,7 +29,7 @@ func (Config) FromDefaultConfig() *Config {
 
 func (Config) FromFile() *Config {
 	homeDir, _ := os.UserHomeDir()
-	configDir := homeDir + "/.localpro"
+	configDir := homeDir + "/.lprx"
 	configFileLoc := configDir + "/config.json"
 
 	// if ~/.dply not exist, then mkdir ~/.dply
@@ -69,7 +70,7 @@ func (Config) FromFile() *Config {
 
 func (s *Config) SaveConfig() error {
 	homeDir, _ := os.UserHomeDir()
-	configDir := homeDir + "/.localpro"
+	configDir := homeDir + "/.lprx"
 	configFileLoc := configDir + "/config.json"
 
 	configJsonMarshalled, _ := json.Marshal(&s)

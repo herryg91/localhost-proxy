@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	rootCmd := &cobra.Command{Use: "localhost-proxy", Short: "localpro", Long: "localhost-proxy"}
+	rootCmd := &cobra.Command{Use: "localhost-proxy", Short: "lprx", Long: "localhost-proxy"}
 	rootCmd.AddCommand(cli.NewCmdStatus().Command)
 	rootCmd.AddCommand(cli_config.New().Command)
 	if err := rootCmd.Execute(); err != nil {
